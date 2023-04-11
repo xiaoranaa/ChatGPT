@@ -94,6 +94,7 @@ const useHasHydrated = () => {
 };
 
 function _Home() {
+  cancelSpeeching();
   const [createNewSession, currentIndex, removeSession] = useChatStore(
     (state) => [
       state.newSession,
@@ -140,7 +141,6 @@ function _Home() {
           onClick={() => {
             setOpenSettings(false);
             setShowSideBar(false);
-            cancelSpeeching();
           }}
         >
           <ChatList />
@@ -165,16 +165,16 @@ function _Home() {
                 onClick={() => {
                   setOpenSettings(true);
                   setShowSideBar(false);
-                  cancelSpeeching();
                 }}
                 shadow
               />
             </div>
-            <div className={styles["sidebar-action"]}>
-              <a href={REPO_URL} target="_blank">
-                <IconButton icon={<GithubIcon />} shadow />
-              </a>
-            </div>
+            {/*github项目跳转*/}
+            {/*<div className={styles["sidebar-action"]}>*/}
+            {/*  <a href={REPO_URL} target="_blank">*/}
+            {/*    <IconButton icon={<GithubIcon />} shadow />*/}
+            {/*  </a>*/}
+            {/*</div>*/}
           </div>
           <div>
             {/*新的聊天按钮*/}
@@ -184,7 +184,6 @@ function _Home() {
               onClick={() => {
                 createNewSession();
                 setShowSideBar(false);
-                cancelSpeeching();
               }}
               shadow
             />
@@ -204,7 +203,7 @@ function _Home() {
         ) : (
           <Chat
             key="chat"
-            showSideBar={() => setShowSideBar(true)}
+            showSideBar={() => {setShowSideBar(true); console.log(123)}}
             sideBarShowing={showSideBar}
           />
         )}
