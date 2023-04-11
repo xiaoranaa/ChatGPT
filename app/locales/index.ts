@@ -7,11 +7,6 @@ import IT from "./it";
 export type {LocaleType} from "./cn";
 
 export const AllLangs = ["en", "cn", "tw", "es", "it"] as const;
-export const synth = getSynth();
-export const AllVoices = getAllVoices().then((voices: SpeechSynthesisVoice[]) => {
-    return voices;
-});
-
 type Lang = (typeof AllLangs)[number];
 
 const LANG_KEY = "lang";
@@ -38,22 +33,6 @@ function getLanguage() {
     } catch {
         return "cn";
     }
-}
-
-function getSynth(): SpeechSynthesis | null {
-    return window.speechSynthesis;
-}
-
-function getAllVoices(): Promise<SpeechSynthesisVoice[]> {
-    return new Promise((resolve) => {
-        // 监听声音列表变化事件
-        synth?.addEventListener('voiceschanged', () => {
-            //const allVoices = synth.getVoices();
-            //这里过滤了只展示国内的声音  如果想要获取所有声音则返回上行代码的allVoices
-            const chineseVoices = synth.getVoices().filter((voice) => voice.lang.includes("zh-"));
-            resolve(chineseVoices || []);
-        });
-    });
 }
 
 export function getLang(): Lang {

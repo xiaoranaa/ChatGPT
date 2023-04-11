@@ -1,6 +1,6 @@
 import {useDebouncedCallback} from "use-debounce";
 import {memo, useState, useRef, useEffect, useLayoutEffect} from "react";
-import {synth, AllVoices} from "../locales";
+import {synth, AllVoices} from "./settings";
 
 import SendWhiteIcon from "../icons/send-white.svg";
 import ChatIcon from "../icons/chat.svg";
@@ -332,6 +332,13 @@ function useScrollToBottom() {
         setAutoScroll,
     };
 }
+
+// export function getSynth(windowObj: Window | undefined): SpeechSynthesis | null {
+//     if (typeof windowObj !== "undefined") {
+//         return windowObj.speechSynthesis;
+//     }
+//     return null;
+// }
 
 export function Chat(props: {
     showSideBar?: () => void;
