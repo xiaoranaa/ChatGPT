@@ -127,7 +127,7 @@ export const ModalConfigValidator = {
     return limitNumber(x, -2, 2, 0);
   },
   speechRate(x: number) {
-    return limitNumber(x, 0, 10, 1);
+    return limitNumber(x, 0, 2, 1);
   },
   speechPitch(x: number) {
     return limitNumber(x, 0, 2, 1);

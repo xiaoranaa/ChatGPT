@@ -19,6 +19,7 @@ import CloseIcon from "../icons/close.svg";
 import { useChatStore } from "../store";
 import { isMobileScreen } from "../utils";
 import Locale from "../locales";
+import {synth} from "./settings";
 import { Chat } from "./chat";
 
 import dynamic from "next/dynamic";
@@ -32,6 +33,13 @@ export function Loading(props: { noLogo?: boolean }) {
       <LoadingIcon />
     </div>
   );
+}
+
+// 窗口切换时停止当前播放中的语音
+function cancelSpeeching() {
+  if(synth != null) {
+    if(synth.speaking)synth.cancel();
+  }
 }
 
 const Settings = dynamic(async () => (await import("./settings")).Settings, {
@@ -126,11 +134,13 @@ function _Home() {
           </div>
         </div>
 
+        {/*左侧聊天框*/}
         <div
           className={styles["sidebar-body"]}
           onClick={() => {
             setOpenSettings(false);
             setShowSideBar(false);
+            cancelSpeeching();
           }}
         >
           <ChatList />
@@ -148,12 +158,14 @@ function _Home() {
                 }}
               />
             </div>
+            {/*设置按钮*/}
             <div className={styles["sidebar-action"]}>
               <IconButton
                 icon={<SettingsIcon />}
                 onClick={() => {
                   setOpenSettings(true);
                   setShowSideBar(false);
+                  cancelSpeeching();
                 }}
                 shadow
               />
@@ -165,12 +177,14 @@ function _Home() {
             </div>
           </div>
           <div>
+            {/*新的聊天按钮*/}
             <IconButton
               icon={<AddIcon />}
               text={Locale.Home.NewChat}
               onClick={() => {
                 createNewSession();
                 setShowSideBar(false);
+                cancelSpeeching();
               }}
               shadow
             />
@@ -178,6 +192,7 @@ function _Home() {
         </div>
       </div>
 
+      {/*设置中的关闭按钮*/}
       <div className={styles["window-content"]}>
         {openSettings ? (
           <Settings

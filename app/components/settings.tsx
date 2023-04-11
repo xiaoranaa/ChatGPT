@@ -335,7 +335,7 @@ export function Settings(props: { closeSettings: () => void }) {
                         <InputRange
                             value={config.speechRate?.toFixed(1)}
                             min="0.1"
-                            max="10"
+                            max="2"
                             step="0.1"
                             onChange={(e) => {
                                 updateConfig(

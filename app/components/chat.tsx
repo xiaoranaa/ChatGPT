@@ -390,7 +390,6 @@ export function Chat(props: {
 
     const [speakText, setSpeakText] = useState("语音");
     const [speechText, setSpeechText] = useState("播放");
-    const [isSpeaking, setIsSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
     useEffect(() => {
         async function fetchVoices() {
@@ -525,16 +524,22 @@ export function Chat(props: {
             return;
         }
         // 如果当前正在播放 则中断当前的播放
-        if (isSpeaking) {
+        if (synth.speaking) {
             synth.cancel();
-            // 当语音播放结束时，将标志重置为false
-            setIsSpeaking(false);
-            // 文案显示更换
-            setSpeechText("播放");
         } else {
-            const voice = voices.filter((voice) => voice.voiceURI === localStorage.getItem("voice"))[0];
             // 创建utterance对象 传入的text为要朗读的文本
             let utterance = new SpeechSynthesisUtterance(text);
+            // 设置回调函数
+            utterance.onstart = () => {
+                setSpeechText("结束");
+            };
+            utterance.onend = () => {
+                setSpeechText("播放");
+            };
+            utterance.onerror = () => {
+                setSpeechText("播放");
+            };
+            const voice = voices.filter((voice) => voice.voiceURI === localStorage.getItem("voice"))[0];
             // 这里的voice一直在 await AllVoices，有值时才设置
             if (voice) {
                 // 设置声音
@@ -546,16 +551,6 @@ export function Chat(props: {
             utterance.pitch = config.speechPitch;
             // 播放语音
             synth.speak(utterance);
-            // 将标志设置为true表示正在播放语音
-            setIsSpeaking(true);
-            // 文案显示更换
-            setSpeechText("结束");
-            utterance.onend = () => {
-                // 当语音播放结束时，将标志重置为false
-                setIsSpeaking(false);
-                // 文案显示更换
-                setSpeechText("播放");
-            };
         }
     };
 
