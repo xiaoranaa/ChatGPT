@@ -333,14 +333,14 @@ export function Settings(props: { closeSettings: () => void }) {
                         subTitle={Locale.Settings.SpeechRate.SubTitle}
                     >
                         <InputRange
-                            value={config.modelConfig.speechRate?.toFixed(1)}
+                            value={config.speechRate?.toFixed(1)}
                             min="0.1"
                             max="10"
                             step="0.1"
                             onChange={(e) => {
                                 updateConfig(
                                     (config) =>
-                                        (config.modelConfig.speechRate =
+                                        (config.speechRate =
                                             ModalConfigValidator.speechRate(
                                                 e.currentTarget.valueAsNumber,
                                             )),
@@ -354,14 +354,14 @@ export function Settings(props: { closeSettings: () => void }) {
                         subTitle={Locale.Settings.SpeechPitch.SubTitle}
                     >
                         <InputRange
-                            value={config.modelConfig.speechPitch?.toFixed(1)}
+                            value={config.speechPitch?.toFixed(1)}
                             min="0.1"
                             max="2"
                             step="0.1"
                             onChange={(e) => {
                                 updateConfig(
                                     (config) =>
-                                        (config.modelConfig.speechPitch =
+                                        (config.speechPitch =
                                             ModalConfigValidator.speechPitch(
                                                 e.currentTarget.valueAsNumber,
                                             )),

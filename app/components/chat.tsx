@@ -333,13 +333,6 @@ function useScrollToBottom() {
     };
 }
 
-// export function getSynth(windowObj: Window | undefined): SpeechSynthesis | null {
-//     if (typeof windowObj !== "undefined") {
-//         return windowObj.speechSynthesis;
-//     }
-//     return null;
-// }
-
 export function Chat(props: {
     showSideBar?: () => void;
     sideBarShowing?: boolean;
@@ -396,6 +389,7 @@ export function Chat(props: {
     const [hitBottom, setHitBottom] = useState(false);
 
     const [speakText, setSpeakText] = useState("语音");
+    const [speechText, setSpeechText] = useState("播放");
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
     useEffect(() => {
@@ -533,10 +527,12 @@ export function Chat(props: {
         // 如果当前正在播放 则中断当前的播放
         if (isSpeaking) {
             synth.cancel();
-        }
-        const voice = voices.filter((voice) => voice.voiceURI === localStorage.getItem("voice"))[0];
-        if (synth != null) {
-
+            // 当语音播放结束时，将标志重置为false
+            setIsSpeaking(false);
+            // 文案显示更换
+            setSpeechText("播放");
+        } else {
+            const voice = voices.filter((voice) => voice.voiceURI === localStorage.getItem("voice"))[0];
             // 创建utterance对象 传入的text为要朗读的文本
             let utterance = new SpeechSynthesisUtterance(text);
             // 这里的voice一直在 await AllVoices，有值时才设置
@@ -545,16 +541,20 @@ export function Chat(props: {
                 utterance.voice = voice;
             }
             // 语速
-            utterance.rate = config.modelConfig.speechRate;
+            utterance.rate = config.speechRate;
             // 音调
-            utterance.pitch = config.modelConfig.speechPitch;
+            utterance.pitch = config.speechPitch;
             // 播放语音
             synth.speak(utterance);
             // 将标志设置为true表示正在播放语音
             setIsSpeaking(true);
+            // 文案显示更换
+            setSpeechText("结束");
             utterance.onend = () => {
                 // 当语音播放结束时，将标志重置为false
                 setIsSpeaking(false);
+                // 文案显示更换
+                setSpeechText("播放");
             };
         }
     };
@@ -735,7 +735,7 @@ export function Chat(props: {
                                                 className={styles["chat-message-top-action"]}
                                                 onClick={() => botRead(message.content)}
                                             >
-                                                {"播放"}
+                                                {speechText}
                                             </div>
                                         </div>
                                     )}

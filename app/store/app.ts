@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { type ChatCompletionResponseMessage } from "openai";
+import { ChatCompletionResponseMessage } from "openai";
 import {
   ControllerPool,
   requestChatStream,
@@ -52,13 +52,12 @@ export interface ChatConfig {
   theme: Theme;
   tightBorder: boolean;
   sendPreviewBubble: boolean;
-
   disablePromptHint: boolean;
+  speechRate: number;
+  speechPitch: number;
 
   modelConfig: {
     model: string;
-    speechRate: number;
-    speechPitch: number;
     temperature: number;
     max_tokens: number;
     presence_penalty: number;
@@ -148,13 +147,12 @@ const DEFAULT_CONFIG: ChatConfig = {
   theme: Theme.Auto as Theme,
   tightBorder: false,
   sendPreviewBubble: true,
-
   disablePromptHint: false,
+  speechRate: 1,
+  speechPitch: 1,
 
   modelConfig: {
     model: "gpt-3.5-turbo",
-    speechRate: 1,
-    speechPitch: 1,
     temperature: 1,
     max_tokens: 2000,
     presence_penalty: 0,
