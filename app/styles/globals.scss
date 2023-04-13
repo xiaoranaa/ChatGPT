@@ -103,6 +103,11 @@ footer {
   bottom: 0;
 }
 
+footer a {
+  font-size: 13px;
+  color: #bbb;
+}
+
 ::-webkit-scrollbar {
   --bar-width: 5px;
   width: var(--bar-width);
