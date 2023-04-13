@@ -207,6 +207,9 @@ function _Home() {
             sideBarShowing={showSideBar}
           />
         )}
+        <div className={styles["bei-an"]}>
+        <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2022015409号-1</a>
+        </div>
       </div>
     </div>
   );
