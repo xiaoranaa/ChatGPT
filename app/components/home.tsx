@@ -126,9 +126,9 @@ function _Home() {
         className={styles.sidebar + ` ${showSideBar && styles["sidebar-show"]}`}
       >
         <div className={styles["sidebar-header"]}>
-          <div className={styles["sidebar-title"]}>ChatGPT Next</div>
+          <div className={styles["sidebar-title"]}>ChatGPT 聊天机器人</div>
           <div className={styles["sidebar-sub-title"]}>
-            Build your own AI assistant.
+
           </div>
           <div className={styles["sidebar-logo"]}>
             <ChatGptIcon />
@@ -207,9 +207,6 @@ function _Home() {
             sideBarShowing={showSideBar}
           />
         )}
-        <div className={styles["bei-an"]}>
-        <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2022015409号-1</a>
-        </div>
       </div>
     </div>
   );

@@ -98,6 +98,11 @@ body {
   }
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
 ::-webkit-scrollbar {
   --bar-width: 5px;
   width: var(--bar-width);
